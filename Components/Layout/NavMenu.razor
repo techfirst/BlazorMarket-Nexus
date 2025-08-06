@@ -1,30 +1,38 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Nexus</a>
+﻿<nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="/" class="text-2xl font-bold text-nexus-dark">
+                Nexus
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Features</a>
+                <a href="#pricing" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Pricing</a>
+                <a href="#blog" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Blog</a>
+                <a href="#faq" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">FAQ</a>
+                <button class="bg-nexus-blue text-white px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-all duration-200 hover:shadow-md" @onclick="HandleGetStartedClick">
+                    Get Started
+                </button>
+            </div>
+            
+            <button class="md:hidden p-2" @onclick="ToggleMobileMenu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
+    
+    <div id="mobile-menu" class="@GetMobileMenuClass() md:hidden bg-white border-t border-gray-100">
+        <div class="px-6 py-4 space-y-4">
+            <a href="#features" class="block text-gray-600 hover:text-nexus-dark font-medium">Features</a>
+            <a href="#pricing" class="block text-gray-600 hover:text-nexus-dark font-medium">Pricing</a>
+            <a href="#blog" class="block text-gray-600 hover:text-nexus-dark font-medium">Blog</a>
+            <a href="#faq" class="block text-gray-600 hover:text-nexus-dark font-medium">FAQ</a>
+            <button class="block bg-nexus-blue text-white text-center px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-colors w-full" @onclick="HandleGetStartedClick">
+                Get Started
+            </button>
         </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    </div>
+</nav>
 

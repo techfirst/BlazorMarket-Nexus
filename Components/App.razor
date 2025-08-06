@@ -5,7 +5,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nexus-blue': '#659BFF',
+                        'nexus-blue-dark': '#4686FE',
+                        'nexus-blue-light': '#E6F1FF',
+                        'nexus-gray': '#FAFBFC',
+                        'nexus-dark': '#0F172A',
+                        'nexus-light-gray': '#F8FAFC',
+                    },
+                    fontFamily: {
+                        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="Nexus.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
