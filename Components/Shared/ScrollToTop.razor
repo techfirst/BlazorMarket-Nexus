@@ -1,0 +1,15 @@
+@rendermode InteractiveServer
+
+@* Scroll to Top Widget *@
+<div id="scroll-to-top" class="@GetScrollToTopClass()">
+    <button @onclick="ScrollToTopAsync" 
+            @onclick:preventDefault="true"
+            class="bg-nexus-blue hover:bg-nexus-blue-dark text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 cursor-pointer"
+            title="Scroll to top"
+            aria-label="Scroll to top"
+            type="button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+</div>

@@ -1,0 +1,34 @@
+@page "/blog"
+@using Nexus.Components.Sections
+@using Nexus.Models
+@using Nexus.Services
+@inject BlogService Service
+
+<PageTitle>Our News - Nexus Blog</PageTitle>
+
+<div class="scroll-on-nav min-h-screen bg-white">
+    <SimpleBlogHeader />
+    
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Loading State -->
+            @if (_isLoading)
+            {
+                <div class="text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-nexus-blue"></div>
+                    <p class="text-gray-600 mt-4">Loading articles...</p>
+                </div>
+            }
+            else
+            {
+                <!-- Blog Grid -->
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    @foreach (var post in _allPosts)
+                    {
+                        <BlogCard Post="post" />
+                    }
+                </div>
+            }
+        </div>
+    </section>
+</div>

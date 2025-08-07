@@ -1,18 +1,18 @@
 ﻿<nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
-            <a href="/" class="text-2xl font-bold text-nexus-dark">
+            <a href="/" class="text-2xl font-semibold text-nexus-dark tracking-tight">
                 Nexus
             </a>
             
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#features" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Features</a>
-                <a href="#pricing" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Pricing</a>
-                <a href="#blog" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Blog</a>
-                <a href="#faq" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">FAQ</a>
-                <button class="bg-nexus-blue text-white px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-all duration-200 hover:shadow-md" @onclick="HandleGetStartedClick">
+                <a href="/#features" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Features</a>
+                <a href="/#pricing" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">Pricing</a>
+                <a href="/blog" class="@GetBlogLinkClass() transition-colors font-medium">Blog</a>
+                <a href="/#faq" class="text-gray-600 hover:text-nexus-dark transition-colors font-medium">FAQ</a>
+                <a href="/#contact" class="bg-nexus-blue text-white px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-all duration-200 hover:shadow-md font-medium">
                     Get Started
-                </button>
+                </a>
             </div>
             
             <button class="md:hidden p-2" @onclick="ToggleMobileMenu">
@@ -25,13 +25,13 @@
     
     <div id="mobile-menu" class="@GetMobileMenuClass() md:hidden bg-white border-t border-gray-100">
         <div class="px-6 py-4 space-y-4">
-            <a href="#features" class="block text-gray-600 hover:text-nexus-dark font-medium">Features</a>
-            <a href="#pricing" class="block text-gray-600 hover:text-nexus-dark font-medium">Pricing</a>
-            <a href="#blog" class="block text-gray-600 hover:text-nexus-dark font-medium">Blog</a>
-            <a href="#faq" class="block text-gray-600 hover:text-nexus-dark font-medium">FAQ</a>
-            <button class="block bg-nexus-blue text-white text-center px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-colors w-full" @onclick="HandleGetStartedClick">
+            <a href="/#features" class="block text-gray-600 hover:text-nexus-dark font-medium" @onclick="ToggleMobileMenu">Features</a>
+            <a href="/#pricing" class="block text-gray-600 hover:text-nexus-dark font-medium" @onclick="ToggleMobileMenu">Pricing</a>
+            <a href="/blog" class="@GetBlogLinkClass() font-medium block">Blog</a>
+            <a href="/#faq" class="block text-gray-600 hover:text-nexus-dark font-medium" @onclick="ToggleMobileMenu">FAQ</a>
+            <a href="/#contact" class="block bg-nexus-blue text-white text-center px-6 py-2 rounded-full hover:bg-nexus-blue-dark transition-colors w-full font-medium" @onclick="ToggleMobileMenu">
                 Get Started
-            </button>
+            </a>
         </div>
     </div>
 </nav>

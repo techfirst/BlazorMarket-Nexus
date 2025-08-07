@@ -1,0 +1,51 @@
+@using Nexus.Models
+
+<div class="max-w-4xl mx-auto px-6 lg:px-8 py-12">
+    <div class="lg:grid lg:grid-cols-4 lg:gap-12">
+        <!-- Main Content -->
+        <article class="lg:col-span-3">
+            <div class="prose prose-lg prose-nexus max-w-none">
+                @((MarkupString)Post.FullContent)
+            </div>
+            
+            <!-- Author Bio -->
+            <div class="mt-12 p-6 bg-nexus-light-gray rounded-2xl">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-nexus-blue rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        @Post.AuthorInitials
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-nexus-dark mb-2">@Post.Author</h3>
+                        <p class="text-gray-600 mb-4">
+                            @GetAuthorBio(Post.Author)
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-nexus-blue hover:text-nexus-blue-dark font-medium">Follow on Twitter</a>
+                            <a href="#" class="text-nexus-blue hover:text-nexus-blue-dark font-medium">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <!-- Sidebar -->
+        <ArticleSidebar Post="@Post" TableOfContents="@TableOfContents" RelatedPosts="@RelatedPosts" />
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public BlogPost Post { get; set; } = null!;
+    [Parameter] public List<TableOfContentsItem> TableOfContents { get; set; } = new();
+    [Parameter] public List<BlogPost> RelatedPosts { get; set; } = new();
+    
+    private string GetAuthorBio(string authorName)
+    {
+        return authorName switch
+        {
+            "Sarah Chen" => "Senior Business Strategist with over 10 years of experience helping companies scale and optimize their operations for sustainable growth.",
+            "Michael Rodriguez" => "Technology consultant and digital transformation expert who has led successful implementations across Fortune 500 companies.",
+            "Jennifer Park" => "Data scientist and analytics expert specializing in helping businesses leverage data for strategic decision-making.",
+            _ => "Experienced professional passionate about sharing insights and best practices to help businesses succeed in today's competitive landscape."
+        };
+    }
+}

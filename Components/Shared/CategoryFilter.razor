@@ -1,0 +1,38 @@
+<div class="flex flex-wrap justify-center gap-3 mb-8">
+    @foreach (var category in Categories)
+    {
+        <button 
+            class="@GetCategoryButtonClasses(category)"
+            @onclick="() => HandleCategoryClick(category)">
+            @category
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public List<string> Categories { get; set; } = new();
+    [Parameter] public string SelectedCategory { get; set; } = "All";
+    [Parameter] public EventCallback<string> OnCategoryChanged { get; set; }
+    
+    private string GetCategoryButtonClasses(string category)
+    {
+        var baseClasses = "px-6 py-3 rounded-full font-medium transition-all duration-200 border";
+        
+        if (category == SelectedCategory)
+        {
+            return $"{baseClasses} bg-nexus-blue text-white border-nexus-blue hover:bg-nexus-blue-dark hover:shadow-md";
+        }
+        
+        return $"{baseClasses} bg-white text-gray-600 border-gray-200 hover:border-nexus-blue hover:text-nexus-blue hover:shadow-sm";
+    }
+    
+    private async Task HandleCategoryClick(string category)
+    {
+        SelectedCategory = category;
+        
+        if (OnCategoryChanged.HasDelegate)
+        {
+            await OnCategoryChanged.InvokeAsync(category);
+        }
+    }
+}

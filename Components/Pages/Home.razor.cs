@@ -1,9 +1,18 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Nexus.Components.Pages;
 
 public partial class Home : ComponentBase
 {
+    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // JavaScript handles hash navigation automatically
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
     private async Task HandleGetStartedClick()
     {
         // TODO: Add navigation logic or show signup modal

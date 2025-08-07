@@ -1,10 +1,14 @@
 using Nexus.Components;
+using Nexus.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Register application services
+builder.Services.AddScoped<BlogService>();
 
 var app = builder.Build();
 

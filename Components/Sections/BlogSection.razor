@@ -1,13 +1,19 @@
 <section id="blog" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-nexus-dark mb-4">Latest Insights</h2>
-            <p class="text-xl text-gray-600">Stay updated with the latest trends and best practices</p>
+            <h2 class="text-4xl font-semibold text-nexus-dark mb-4 tracking-tight">Latest Insights</h2>
+            <p class="text-xl text-gray-600 font-normal leading-relaxed">Stay updated with the latest trends and best practices</p>
         </div>
         
         <div class="grid md:grid-cols-3 gap-8">
             <article class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-nexus-blue to-nexus-blue-dark"></div>
+                <div class="h-48 relative overflow-hidden bg-gray-100">
+                    <img src="https://picsum.photos/id/20/400/300" 
+                         alt="10 Strategies to Scale Your Business in 2024" 
+                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+                         loading="lazy" />
+                    <div class="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors duration-300"></div>
+                </div>
                 <div class="p-6">
                     <div class="flex items-center text-sm text-gray-500 mb-3">
                         <span>Business Growth</span>
@@ -27,7 +33,13 @@
             </article>
             
             <article class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-green-400 to-blue-500"></div>
+                <div class="h-48 relative overflow-hidden bg-gray-100">
+                    <img src="https://picsum.photos/id/3/400/300" 
+                         alt="The Future of Digital Transformation" 
+                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+                         loading="lazy" />
+                    <div class="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors duration-300"></div>
+                </div>
                 <div class="p-6">
                     <div class="flex items-center text-sm text-gray-500 mb-3">
                         <span>Technology</span>
@@ -47,7 +59,13 @@
             </article>
             
             <article class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-purple-400 to-pink-500"></div>
+                <div class="h-48 relative overflow-hidden bg-gray-100">
+                    <img src="https://picsum.photos/id/43/400/300" 
+                         alt="Making Data-Driven Decisions That Matter" 
+                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+                         loading="lazy" />
+                    <div class="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors duration-300"></div>
+                </div>
                 <div class="p-6">
                     <div class="flex items-center text-sm text-gray-500 mb-3">
                         <span>Analytics</span>
@@ -68,9 +86,9 @@
         </div>
         
         <div class="text-center mt-12">
-            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Large">
+            <a href="/blog" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200">
                 View All Articles
-            </Button>
+            </a>
         </div>
     </div>
 </section>

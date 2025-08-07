@@ -5,6 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,8 +23,15 @@
                         'nexus-light-gray': '#F8FAFC',
                     },
                     fontFamily: {
-                        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
+                        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
                     },
+                    fontWeight: {
+                        'light': '300',
+                        'normal': '400',
+                        'medium': '500',
+                        'semibold': '600', 
+                        'bold': '700',
+                    }
                 }
             }
         }
@@ -34,6 +45,125 @@
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <script>
+        // Blazor anchor navigation system
+        let isNavigatingToHash = false;
+        let retryCount = 0;
+        const maxRetries = 10;
+        
+        // Handle initial hash scroll after page load
+        function handleInitialHashScroll() {
+            if (window.location.hash && window.location.pathname === '/') {
+                const sectionId = window.location.hash.substring(1);
+                console.log('Initial hash scroll to:', sectionId);
+                setTimeout(() => scrollToSection(sectionId), 200);
+            }
+        }
+        
+        // Smooth scroll to section function with retry logic
+        function scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerOffset = 80;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                console.log('Successfully scrolled to section:', sectionId);
+                retryCount = 0; // Reset retry count on success
+            } else {
+                retryCount++;
+                console.log('Section not found, retry', retryCount, '/', maxRetries, '- looking for:', sectionId);
+                
+                // Element not found yet, try again with exponential backoff
+                if (retryCount < maxRetries) {
+                    const delay = Math.min(200 * retryCount, 2000); // Cap at 2 seconds
+                    setTimeout(() => scrollToSection(sectionId), delay);
+                } else {
+                    console.warn('Failed to find section after', maxRetries, 'retries:', sectionId);
+                    retryCount = 0; // Reset for next attempt
+                }
+            }
+        }
+        
+        // Enhanced hash change handler
+        window.addEventListener('hashchange', function(event) {
+            const sectionId = window.location.hash.substring(1);
+            console.log('Hash changed to:', sectionId, 'on path:', window.location.pathname);
+            
+            if (sectionId) {
+                if (window.location.pathname === '/') {
+                    // Already on home page, scroll immediately
+                    scrollToSection(sectionId);
+                } else {
+                    // Not on home page, navigation will occur
+                    console.log('Hash navigation will trigger page change');
+                    isNavigatingToHash = true;
+                }
+            }
+        });
+        
+        // Listen for Blazor navigation events
+        window.addEventListener('popstate', function(event) {
+            console.log('Popstate event - checking for hash navigation');
+            setTimeout(handleInitialHashScroll, 100);
+        });
+        
+        // Blazor-specific: Handle after Blazor renders
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking for initial hash');
+            handleInitialHashScroll();
+        });
+        
+        // Additional check after potential Blazor re-renders
+        function checkPendingHashNavigation() {
+            if (isNavigatingToHash && window.location.hash && window.location.pathname === '/') {
+                console.log('Handling pending hash navigation');
+                isNavigatingToHash = false;
+                const sectionId = window.location.hash.substring(1);
+                setTimeout(() => scrollToSection(sectionId), 300);
+            }
+        }
+        
+        // Check for pending navigation periodically
+        setInterval(checkPendingHashNavigation, 500);
+        
+        // Scroll to Top Widget Functions
+        let scrollToTopComponent = null;
+        let scrollToTopListener = null;
+        
+        window.initializeScrollToTop = function(dotnetHelper) {
+            scrollToTopComponent = dotnetHelper;
+            
+            // Add scroll listener to track scroll position
+            scrollToTopListener = function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const shouldShow = scrollTop > 300; // Show after scrolling 300px
+                
+                if (scrollToTopComponent) {
+                    scrollToTopComponent.invokeMethodAsync('UpdateVisibility', shouldShow);
+                }
+            };
+            
+            window.addEventListener('scroll', scrollToTopListener, { passive: true });
+            
+            // Initial check
+            scrollToTopListener();
+        };
+        
+        window.disposeScrollToTop = function() {
+            if (scrollToTopListener) {
+                window.removeEventListener('scroll', scrollToTopListener);
+                scrollToTopListener = null;
+            }
+            scrollToTopComponent = null;
+        };
+    </script>
 </body>
 
 </html>

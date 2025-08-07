@@ -1,5 +1,10 @@
 /* Custom styles to complement Tailwind */
 
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Blazor specific styles */
 .valid.modified:not([type=checkbox]) {
     border-color: #10b981;
@@ -88,4 +93,138 @@
         padding-top: 3rem !important;
         padding-bottom: 3rem !important;
     }
+}
+
+/* Blog-specific styles */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Blog card hover effects */
+.blog-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Category filter animations */
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.category-button {
+    transition: all 0.2s ease-in-out;
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border: 1px solid;
+}
+
+.category-button.active {
+    background-color: #659BFF;
+    color: white;
+    border-color: #659BFF;
+    box-shadow: 0 4px 14px 0 rgba(101, 155, 255, 0.4);
+}
+
+.category-button:not(.active) {
+    background-color: white;
+    color: #6B7280;
+    border-color: #E5E7EB;
+}
+
+.category-button:not(.active):hover {
+    border-color: #659BFF;
+    color: #659BFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Article prose styles */
+.prose-nexus {
+    color: #374151;
+    line-height: 1.75;
+}
+
+.prose-nexus h2 {
+    color: #0F172A;
+    font-weight: 700;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.prose-nexus h3 {
+    color: #0F172A;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.prose-nexus p {
+    margin-bottom: 1.25rem;
+}
+
+.prose-nexus ul, .prose-nexus ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+}
+
+.prose-nexus li {
+    margin-bottom: 0.5rem;
+}
+
+.prose-nexus blockquote {
+    border-left: 4px solid #659BFF;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 1.125rem;
+    color: #4B5563;
+}
+
+.prose-nexus strong {
+    color: #0F172A;
+    font-weight: 600;
+}
+
+.prose-nexus a {
+    color: #659BFF;
+    text-decoration: none;
+}
+
+.prose-nexus a:hover {
+    color: #4686FE;
+    text-decoration: underline;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
