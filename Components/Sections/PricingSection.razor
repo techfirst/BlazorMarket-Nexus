@@ -5,16 +5,16 @@
             <p class="text-xl text-gray-600">Choose the perfect plan to grow your business</p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-8 items-stretch">
             <!-- Starter Plan -->
-            <div class="bg-white p-8 rounded-2xl border border-gray-100">
+            <div class="bg-white p-8 rounded-2xl border border-gray-100 flex flex-col h-full">
                 <div class="text-center mb-8">
                     <h3 class="text-xl font-semibold text-nexus-dark mb-2">Starter</h3>
                     <div class="text-4xl font-bold text-nexus-dark mb-1">$19</div>
                     <div class="text-gray-500">per month</div>
                 </div>
                 
-                <ul class="space-y-4 mb-8">
+                <ul class="space-y-4 mb-8 flex-grow">
                     <li class="flex items-center">
                         <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -35,13 +35,15 @@
                     </li>
                 </ul>
                 
-                <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Large" AdditionalClasses="w-full">
-                    Get Started
-                </Button>
+                <div class="mt-auto">
+                    <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Large" AdditionalClasses="w-full">
+                        Get Started
+                    </Button>
+                </div>
             </div>
             
             <!-- Professional Plan -->
-            <div class="bg-nexus-blue p-8 rounded-2xl text-white relative">
+            <div class="bg-nexus-blue p-8 rounded-2xl text-white relative flex flex-col h-full">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span class="bg-nexus-blue-dark text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
                 </div>
@@ -52,7 +54,7 @@
                     <div class="text-nexus-blue-light">per month</div>
                 </div>
                 
-                <ul class="space-y-4 mb-8">
+                <ul class="space-y-4 mb-8 flex-grow">
                     <li class="flex items-center">
                         <svg class="w-5 h-5 text-green-300 mr-3" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -79,20 +81,22 @@
                     </li>
                 </ul>
                 
-                <Button Variant="ButtonVariant.White" Size="ButtonSize.Large" AdditionalClasses="w-full">
-                    Get Started
-                </Button>
+                <div class="mt-auto">
+                    <Button Variant="ButtonVariant.White" Size="ButtonSize.Large" AdditionalClasses="w-full">
+                        Get Started
+                    </Button>
+                </div>
             </div>
             
             <!-- Enterprise Plan -->
-            <div class="bg-white p-8 rounded-2xl border border-gray-100">
+            <div class="bg-white p-8 rounded-2xl border border-gray-100 flex flex-col h-full">
                 <div class="text-center mb-8">
                     <h3 class="text-xl font-semibold text-nexus-dark mb-2">Enterprise</h3>
                     <div class="text-4xl font-bold text-nexus-dark mb-1">$99</div>
                     <div class="text-gray-500">per month</div>
                 </div>
                 
-                <ul class="space-y-4 mb-8">
+                <ul class="space-y-4 mb-8 flex-grow">
                     <li class="flex items-center">
                         <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -119,9 +123,11 @@
                     </li>
                 </ul>
                 
-                <button class="w-full inline-flex items-center justify-center px-8 py-4 text-lg rounded-full font-semibold border-2 border-nexus-blue text-nexus-blue hover:bg-nexus-blue hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexus-blue">
-                    Contact Sales
-                </button>
+                <div class="mt-auto">
+                    <button class="w-full inline-flex items-center justify-center px-8 py-4 text-lg rounded-full font-semibold border-2 border-nexus-blue text-nexus-blue hover:bg-nexus-blue hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexus-blue">
+                        Contact Sales
+                    </button>
+                </div>
             </div>
         </div>
     </div>
