@@ -64,12 +64,17 @@ cd nexus
 # Or extract the ZIP file and navigate to the folder
 ```
 
-2. **Restore dependencies**
+2. **Navigate to the project directory**
+```bash
+cd src/Nexus
+```
+
+3. **Restore dependencies**
 ```bash
 dotnet restore
 ```
 
-3. **Run the application**
+4. **Run the application**
 ```bash
 # Development mode with hot reload
 dotnet watch run
@@ -78,14 +83,14 @@ dotnet watch run
 dotnet run
 ```
 
-4. **Open in browser**
+5. **Open in browser**
    - Navigate to `https://localhost:7048` or `http://localhost:5048`
    - The template will be running with all features enabled
 
 ## 🎯 How to Customize
 
 ### 1. **Branding & Colors**
-Edit `/Components/App.razor` to customize the Tailwind color scheme:
+Edit `src/Nexus/Components/App.razor` to customize the Tailwind color scheme:
 ```javascript
 colors: {
     'nexus-blue': '#659BFF',          // Primary blue
@@ -97,46 +102,55 @@ colors: {
 ```
 
 ### 2. **Content Updates**
-- **Hero Section**: Edit `/Components/Sections/HeroSection.razor`
-- **Features**: Update `/Components/Sections/FeaturesSection.razor`
-- **Pricing**: Modify `/Components/Sections/PricingSection.razor`
-- **Contact Info**: Update `/Components/Sections/ContactSection.razor`
+- **Hero Section**: Edit `src/Nexus/Components/Sections/HeroSection.razor`
+- **Features**: Update `src/Nexus/Components/Sections/FeaturesSection.razor`
+- **Pricing**: Modify `src/Nexus/Components/Sections/PricingSection.razor`
+- **Contact Info**: Update `src/Nexus/Components/Sections/ContactSection.razor`
 
 ### 3. **Images & Assets**
-- Replace logo and branding in `/wwwroot/images/`
-- Update favicon: Replace `/wwwroot/favicon.png`
-- Phone mockup: Replace `/wwwroot/images/phone2.png`
+- Replace logo and branding in `src/Nexus/wwwroot/images/`
+- Update favicon: Replace `src/Nexus/wwwroot/favicon.png`
+- Phone mockup: Replace `src/Nexus/wwwroot/images/phone2.png`
 
 ### 4. **Navigation & Routing**
-- Main navigation: `/Components/Layout/NavMenu.razor`
-- Add new pages: Create in `/Components/Pages/`
+- Main navigation: `src/Nexus/Components/Layout/NavMenu.razor`
+- Add new pages: Create in `src/Nexus/Components/Pages/`
 - Update routing: Modify page `@page` directives
 
 ### 5. **Blog Content**
-- Blog posts: Edit sample data in `/Services/BlogService.cs`
+- Blog posts: Edit sample data in `src/Nexus/Services/BlogService.cs`
 - Add real blog functionality by connecting to a CMS or database
-- Customize blog layout: `/Components/Pages/Blog.razor` and `/Components/Pages/BlogDetail.razor`
+- Customize blog layout: `src/Nexus/Components/Pages/Blog.razor` and `src/Nexus/Components/Pages/BlogDetail.razor`
 
 ## 📁 Project Structure
 
 ```
 nexus/
-├── Components/
-│   ├── Layout/          # Layout components (NavMenu, MainLayout)
-│   ├── Pages/           # Routable page components
-│   ├── Sections/        # Landing page sections
-│   ├── Shared/          # Reusable UI components
-│   └── App.razor        # Root application component
-├── Models/              # Data models and DTOs
-├── Services/            # Business logic services
-├── wwwroot/            # Static assets (CSS, images, etc.)
-├── Program.cs          # Application configuration
-└── appsettings.json    # App configuration
+├── Nexus.sln           # Solution file
+├── LICENSE             # License file
+├── README.md           # This file
+└── src/
+    └── Nexus/          # Main project folder
+        ├── Components/
+        │   ├── Layout/      # Layout components (NavMenu, MainLayout)
+        │   ├── Pages/       # Routable page components
+        │   ├── Sections/    # Landing page sections
+        │   ├── Shared/      # Reusable UI components
+        │   └── App.razor    # Root application component
+        ├── Models/          # Data models and DTOs
+        ├── Services/        # Business logic services
+        ├── wwwroot/         # Static assets (CSS, images, etc.)
+        ├── Program.cs       # Application configuration
+        ├── appsettings.json # App configuration
+        └── Nexus.csproj     # Project file
 ```
 
 ## 🔧 Development Commands
 
 ```bash
+# Navigate to project directory first
+cd src/Nexus
+
 # Build the project
 dotnet build
 
@@ -172,11 +186,13 @@ All components are built mobile-first and scale up responsively.
 
 ### Development
 ```bash
+cd src/Nexus
 dotnet run --environment Development
 ```
 
 ### Production
 ```bash
+cd src/Nexus
 dotnet run --environment Production
 ```
 
