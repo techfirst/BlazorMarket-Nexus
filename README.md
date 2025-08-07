@@ -58,7 +58,7 @@ A professional, conversion-focused landing page template built with **Blazor Ser
 1. **Clone or download** the template
 ```bash
 # If using git
-git clone [your-repo-url]
+git clone https://github.com/techfirst/BlazorMarket-Nexus.git
 cd nexus
 
 # Or extract the ZIP file and navigate to the folder
