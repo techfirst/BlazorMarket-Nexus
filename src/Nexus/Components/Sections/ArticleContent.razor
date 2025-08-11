@@ -9,14 +9,14 @@
             </div>
             
             <!-- Author Bio -->
-            <div class="mt-12 p-6 bg-nexus-light-gray rounded-2xl">
+            <div class="mt-12 p-6 bg-nexus-light-gray dark:bg-gray-800 rounded-2xl">
                 <div class="flex items-start space-x-4">
                     <div class="w-16 h-16 bg-nexus-blue rounded-full flex items-center justify-center text-white text-xl font-bold">
                         @Post.AuthorInitials
                     </div>
                     <div class="flex-1">
-                        <h3 class="text-xl font-semibold text-nexus-dark mb-2">@Post.Author</h3>
-                        <p class="text-gray-600 mb-4">
+                        <h3 class="text-xl font-semibold text-nexus-dark dark:text-white mb-2">@Post.Author</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
                             @GetAuthorBio(Post.Author)
                         </p>
                         <div class="flex space-x-4">

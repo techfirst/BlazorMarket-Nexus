@@ -5,13 +5,13 @@
         <!-- Table of Contents -->
         @if (TableOfContents.Any())
         {
-            <div class="bg-nexus-light-gray p-6 rounded-2xl">
-                <h3 class="font-semibold text-nexus-dark mb-4">Table of Contents</h3>
+            <div class="bg-nexus-light-gray dark:bg-gray-800 p-6 rounded-2xl">
+                <h3 class="font-semibold text-nexus-dark dark:text-white mb-4">Table of Contents</h3>
                 <nav class="space-y-2">
                     @foreach (var item in TableOfContents)
                     {
                         <a href="#@item.Id" 
-                           class="@GetTocItemClass(item.Level) block text-gray-600 hover:text-nexus-blue transition-colors">
+                           class="@GetTocItemClass(item.Level) block text-gray-600 dark:text-gray-300 hover:text-nexus-blue transition-colors">
                             @item.Title
                         </a>
                     }
@@ -20,8 +20,8 @@
         }
         
         <!-- Share Buttons -->
-        <div class="bg-white border border-gray-100 p-6 rounded-2xl">
-            <h3 class="font-semibold text-nexus-dark mb-4">Share Article</h3>
+        <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 rounded-2xl">
+            <h3 class="font-semibold text-nexus-dark dark:text-white mb-4">Share Article</h3>
             <div class="space-y-3">
                 <button class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -47,18 +47,18 @@
         <!-- Related Posts -->
         @if (RelatedPosts.Any())
         {
-            <div class="bg-white border border-gray-100 p-6 rounded-2xl">
-                <h3 class="font-semibold text-nexus-dark mb-4">Related Articles</h3>
+            <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 rounded-2xl">
+                <h3 class="font-semibold text-nexus-dark dark:text-white mb-4">Related Articles</h3>
                 <div class="space-y-4">
                     @foreach (var post in RelatedPosts)
                     {
                         <article class="group">
                             <a href="/blog/@post.Slug" class="block">
                                 <div class="h-32 bg-gradient-to-r @post.FeaturedImageGradient rounded-lg mb-3 group-hover:opacity-90 transition-opacity"></div>
-                                <h4 class="font-medium text-nexus-dark group-hover:text-nexus-blue transition-colors line-clamp-2">
+                                <h4 class="font-medium text-nexus-dark dark:text-white group-hover:text-nexus-blue transition-colors line-clamp-2">
                                     @post.Title
                                 </h4>
-                                <p class="text-sm text-gray-500 mt-1">@post.ReadTimeMinutes min read</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">@post.ReadTimeMinutes min read</p>
                             </a>
                         </article>
                     }

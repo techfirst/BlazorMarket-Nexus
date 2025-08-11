@@ -5,12 +5,13 @@ using Nexus.Services;
 
 namespace Nexus.Components.Pages;
 
-public partial class BlogDetail : ComponentBase
+public partial class BlogDetail : ComponentBase, IDisposable
 {
     [Parameter] public string Slug { get; set; } = string.Empty;
     [Inject] private BlogService BlogService { get; set; } = null!;
     [Inject] private NavigationManager Navigation { get; set; } = null!;
     [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private ThemeService ThemeService { get; set; } = null!;
     
     private BlogPost? Post { get; set; }
     private List<TableOfContentsItem> _tableOfContents = new();
@@ -19,6 +20,7 @@ public partial class BlogDetail : ComponentBase
     
     protected override async Task OnParametersSetAsync()
     {
+        await ThemeService.ReapplyThemeAsync();
         await LoadPost();
     }
     
@@ -63,5 +65,10 @@ public partial class BlogDetail : ComponentBase
     private void NavigateToBlob()
     {
         Navigation.NavigateTo("/blog");
+    }
+
+    public void Dispose()
+    {
+        // Cleanup if needed
     }
 }

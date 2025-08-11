@@ -1,5 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @using Nexus.Components.Shared
+@using Nexus.Services
+@using Microsoft.AspNetCore.Components.Routing
+@inject ThemeService ThemeService
+@inject NavigationManager NavigationManager
+@implements IDisposable
 
 <div class="min-h-screen bg-nexus-gray">
     <NavMenu />
@@ -12,6 +17,42 @@
     
     <ScrollToTop />
 </div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ThemeService.InitializeAsync();
+            NavigationManager.LocationChanged += OnLocationChanged;
+        }
+    }
+
+    private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        // Reapply theme on every navigation to ensure consistency
+        try
+        {
+            await InvokeAsync(async () =>
+            {
+                await ThemeService.ReapplyThemeAsync();
+            });
+        }
+        catch (InvalidOperationException)
+        {
+            // Component may be disposing - ignore
+        }
+        catch (Exception ex)
+        {
+            // Navigation error during theme reapplication
+        }
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.

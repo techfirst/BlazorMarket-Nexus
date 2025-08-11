@@ -2,11 +2,10 @@
 @using Nexus.Components.Sections
 @using Nexus.Models
 @using Nexus.Services
-@inject BlogService Service
 
 <PageTitle>Our News - Nexus Blog</PageTitle>
 
-<div class="scroll-on-nav min-h-screen bg-white">
+<div class="scroll-on-nav min-h-screen bg-white dark:bg-gray-900">
     <SimpleBlogHeader />
     
     <section class="py-12">
@@ -16,7 +15,7 @@
             {
                 <div class="text-center py-12">
                     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-nexus-blue"></div>
-                    <p class="text-gray-600 mt-4">Loading articles...</p>
+                    <p class="text-gray-600 dark:text-gray-300 mt-4">Loading articles...</p>
                 </div>
             }
             else
