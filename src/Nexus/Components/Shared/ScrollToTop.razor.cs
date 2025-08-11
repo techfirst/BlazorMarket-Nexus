@@ -31,7 +31,18 @@ public partial class ScrollToTop : ComponentBase, IAsyncDisposable
 
     private async Task ScrollToTopAsync()
     {
-        await JSRuntime.InvokeVoidAsync("eval", "window.scrollTo({ top: 0, behavior: 'smooth' })");
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("eval", "window.scrollTo({ top: 0, behavior: 'smooth' })");
+        }
+        catch (JSDisconnectedException)
+        {
+            // Ignore - the circuit has disconnected
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ScrollToTop scroll error: {ex.Message}");
+        }
     }
 
     private string GetScrollToTopClass()
@@ -45,8 +56,22 @@ public partial class ScrollToTop : ComponentBase, IAsyncDisposable
     {
         if (_dotNetRef != null)
         {
-            await JSRuntime.InvokeVoidAsync("disposeScrollToTop");
-            _dotNetRef.Dispose();
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("disposeScrollToTop");
+            }
+            catch (JSDisconnectedException)
+            {
+                // Ignore - the circuit has disconnected, which is expected during navigation
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ScrollToTop dispose error: {ex.Message}");
+            }
+            finally
+            {
+                _dotNetRef.Dispose();
+            }
         }
     }
 }

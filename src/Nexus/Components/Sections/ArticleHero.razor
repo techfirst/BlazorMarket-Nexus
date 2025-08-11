@@ -2,7 +2,7 @@
 
 <section class="relative">
     <!-- Featured Image -->
-    <div class="h-96 relative overflow-hidden bg-gray-200">
+    <div class="h-96 relative overflow-hidden bg-gray-200 dark:bg-gray-700">
         <img src="https://picsum.photos/id/@(Post.Id + 50)/1200/384" 
              alt="@Post.Title" 
              class="w-full h-full object-cover" 
@@ -19,43 +19,43 @@
     
     <!-- Article Header -->
     <div class="max-w-4xl mx-auto px-6 lg:px-8 -mt-20 relative z-10">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
             <!-- Breadcrumb -->
             <Breadcrumb Items="@GetBreadcrumbItems()" />
             
             <!-- Title -->
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-nexus-dark leading-tight mb-6">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-nexus-dark dark:text-white leading-tight mb-6">
                 @Post.Title
             </h1>
             
             <!-- Meta Information -->
-            <div class="flex flex-wrap items-center gap-6 text-gray-600 mb-6">
+            <div class="flex flex-wrap items-center gap-6 text-gray-600 dark:text-gray-300 mb-6">
                 <!-- Author -->
                 <div class="flex items-center">
-                    <div class="w-12 h-12 rounded-full overflow-hidden mr-3 bg-gray-100">
+                    <div class="w-12 h-12 rounded-full overflow-hidden mr-3 bg-gray-100 dark:bg-gray-700">
                         <img src="https://picsum.photos/id/@(Post.Id + 200)/48/48" 
                              alt="@Post.Author" 
                              class="w-full h-full object-cover" 
                              loading="lazy" />
                     </div>
                     <div>
-                        <div class="font-medium text-nexus-dark">@Post.Author</div>
-                        <div class="text-sm text-gray-500">Author</div>
+                        <div class="font-medium text-nexus-dark dark:text-white">@Post.Author</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Author</div>
                     </div>
                 </div>
                 
                 <!-- Divider -->
-                <div class="hidden md:block w-px h-12 bg-gray-200"></div>
+                <div class="hidden md:block w-px h-12 bg-gray-200 dark:bg-gray-600"></div>
                 
                 <!-- Date & Reading Time -->
                 <div class="flex items-center space-x-6">
                     <div>
-                        <div class="font-medium text-nexus-dark">@Post.PublishedDate.ToString("MMMM dd, yyyy")</div>
-                        <div class="text-sm text-gray-500">Published</div>
+                        <div class="font-medium text-nexus-dark dark:text-white">@Post.PublishedDate.ToString("MMMM dd, yyyy")</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Published</div>
                     </div>
                     <div>
-                        <div class="font-medium text-nexus-dark">@Post.ReadTimeMinutes min read</div>
-                        <div class="text-sm text-gray-500">Reading time</div>
+                        <div class="font-medium text-nexus-dark dark:text-white">@Post.ReadTimeMinutes min read</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Reading time</div>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach (var tag in Post.Tags)
                     {
-                        <span class="bg-nexus-light-gray text-gray-700 px-3 py-1 rounded-full text-sm">
+                        <span class="bg-nexus-light-gray dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">
                             @tag
                         </span>
                     }

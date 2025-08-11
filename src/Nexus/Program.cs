@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
 
 // Register application services
 builder.Services.AddScoped<BlogService>();
+builder.Services.AddScoped<ThemeService>();
 
 var app = builder.Build();
 

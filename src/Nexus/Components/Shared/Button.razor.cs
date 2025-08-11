@@ -28,8 +28,8 @@ public partial class Button : ComponentBase
         var variantClasses = Variant switch
         {
             ButtonVariant.Primary => "bg-nexus-blue text-white hover:bg-nexus-blue-dark focus:ring-nexus-blue hover:shadow-lg hover:-translate-y-1",
-            ButtonVariant.Secondary => "bg-transparent text-nexus-blue border-2 border-nexus-blue hover:bg-nexus-blue hover:text-white focus:ring-nexus-blue",
-            ButtonVariant.White => "bg-white text-nexus-blue hover:bg-gray-50 focus:ring-nexus-blue shadow-md",
+            ButtonVariant.Secondary => "bg-transparent text-nexus-blue border-2 border-nexus-blue hover:bg-nexus-blue hover:text-white dark:hover:text-white focus:ring-nexus-blue",
+            ButtonVariant.White => "bg-white dark:bg-gray-800 text-nexus-blue dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-nexus-blue shadow-md",
             _ => "bg-nexus-blue text-white hover:bg-nexus-blue-dark focus:ring-nexus-blue"
         };
 

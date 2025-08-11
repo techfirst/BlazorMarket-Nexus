@@ -1,9 +1,9 @@
 @using Nexus.Models
 
 <a href="/blog/@Post.Slug" class="group block">
-    <article class="bg-white rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+    <article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
         <!-- Featured Image -->
-        <div class="h-48 relative overflow-hidden bg-gray-100">
+        <div class="h-48 relative overflow-hidden bg-gray-100 dark:bg-gray-700">
             <img src="https://picsum.photos/id/@(Post.Id + 10)/400/300" 
                  alt="@Post.Title" 
                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
@@ -19,7 +19,7 @@
             </h3>
             
             <!-- Description -->
-            <p class="text-gray-600 text-sm leading-relaxed">
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 @Post.Excerpt
             </p>
         </div>

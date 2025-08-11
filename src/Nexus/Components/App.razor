@@ -11,16 +11,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Apply dark theme immediately if saved in localStorage - prevents flash
+        (function() {
+            try {
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {
+                // Ignore localStorage errors
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #FAFBFC;
+            --bg-tertiary: #F8FAFC;
+            --bg-card: #ffffff;
+            --text-primary: #0F172A;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: #E5E7EB;
+            --border-light: #F3F4F6;
+            --nexus-blue: #659BFF;
+            --nexus-blue-dark: #4686FE;
+            --nexus-blue-light: #E6F1FF;
+        }
+        
+        .dark {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --bg-card: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-color: #334155;
+            --border-light: #475569;
+            --nexus-blue: #659BFF;
+            --nexus-blue-dark: #4686FE;
+            --nexus-blue-light: #1E3A5F;
+        }
+    </style>
+    <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        'nexus-blue': '#659BFF',
-                        'nexus-blue-dark': '#4686FE',
-                        'nexus-blue-light': '#E6F1FF',
-                        'nexus-gray': '#FAFBFC',
-                        'nexus-dark': '#0F172A',
-                        'nexus-light-gray': '#F8FAFC',
+                        'nexus-blue': 'var(--nexus-blue)',
+                        'nexus-blue-dark': 'var(--nexus-blue-dark)',
+                        'nexus-blue-light': 'var(--nexus-blue-light)',
+                        'nexus-gray': 'var(--bg-secondary)',
+                        'nexus-dark': 'var(--text-primary)',
+                        'nexus-light-gray': 'var(--bg-tertiary)',
                     },
                     fontFamily: {
                         'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
@@ -132,6 +176,125 @@
         
         // Check for pending navigation periodically
         setInterval(checkPendingHashNavigation, 500);
+        
+        // Theme management for coordination with C# ThemeService
+        window.themeHelper = {
+            // Apply theme from localStorage on initial load only
+            applyInitialTheme: function() {
+                try {
+                    const savedTheme = localStorage.getItem('theme');
+                    if (savedTheme === 'dark') {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    console.log('Initial theme applied:', savedTheme || 'light');
+                    console.log('DOM classList after initial apply:', document.documentElement.className);
+                } catch (e) {
+                    console.error('Could not apply initial theme:', e);
+                }
+            },
+            
+            // Called by C# ThemeService to apply theme changes
+            setTheme: function(isDark) {
+                try {
+                    console.log('setTheme called with isDark:', isDark);
+                    console.log('DOM classList before:', document.documentElement.className);
+                    
+                    // Force immediate theme application
+                    document.documentElement.classList.remove('dark');
+                    if (isDark) {
+                        document.documentElement.classList.add('dark');
+                    }
+                    
+                    // Also save to localStorage immediately
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    
+                    console.log('DOM classList after:', document.documentElement.className);
+                    console.log('Dark class present:', document.documentElement.classList.contains('dark'));
+                    console.log('Theme set by C# completed:', isDark ? 'dark' : 'light');
+                } catch (e) {
+                    console.error('Could not set theme:', e);
+                    throw e; // Re-throw so C# can catch it
+                }
+            },
+            
+            // Debug function to check current state
+            getThemeState: function() {
+                return {
+                    classList: document.documentElement.className,
+                    hasDark: document.documentElement.classList.contains('dark'),
+                    localStorage: localStorage.getItem('theme')
+                };
+            }
+        };
+        
+        // Apply initial theme immediately - before any rendering
+        window.themeHelper.applyInitialTheme();
+        
+        // Apply theme as early as possible to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+        
+        // Apply initial theme on page load events
+        document.addEventListener('DOMContentLoaded', window.themeHelper.applyInitialTheme);
+        window.addEventListener('load', window.themeHelper.applyInitialTheme);
+        
+        // Instant theme consistency using MutationObserver
+        function ensureThemeConsistency() {
+            const savedTheme = localStorage.getItem('theme');
+            const isDark = savedTheme === 'dark';
+            const hasDarkClass = document.documentElement.classList.contains('dark');
+            
+            if (isDark && !hasDarkClass) {
+                document.documentElement.classList.add('dark');
+                console.log('Instantly reapplied dark theme');
+            } else if (!isDark && hasDarkClass) {
+                document.documentElement.classList.remove('dark');
+                console.log('Instantly reapplied light theme');
+            }
+        }
+        
+        // Use MutationObserver for instant DOM change detection
+        const themeObserver = new MutationObserver(function(mutations) {
+            let shouldCheck = false;
+            
+            mutations.forEach(function(mutation) {
+                // Check if the documentElement class list changed
+                if (mutation.type === 'attributes' && 
+                    mutation.attributeName === 'class' && 
+                    mutation.target === document.documentElement) {
+                    shouldCheck = true;
+                }
+                // Also check for added/removed nodes that might affect rendering
+                else if (mutation.type === 'childList' && 
+                         (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0)) {
+                    shouldCheck = true;
+                }
+            });
+            
+            if (shouldCheck) {
+                // Use requestAnimationFrame to ensure DOM is fully updated
+                requestAnimationFrame(ensureThemeConsistency);
+            }
+        });
+        
+        // Start observing changes to the entire document
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class'],
+            childList: true,
+            subtree: true
+        });
+        
+        // Also run consistency check immediately and on key events
+        ensureThemeConsistency();
+        document.addEventListener('DOMContentLoaded', ensureThemeConsistency);
+        window.addEventListener('load', ensureThemeConsistency);
         
         // Scroll to Top Widget Functions
         let scrollToTopComponent = null;
