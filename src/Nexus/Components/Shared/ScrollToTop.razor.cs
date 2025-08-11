@@ -41,7 +41,7 @@ public partial class ScrollToTop : ComponentBase, IAsyncDisposable
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"ScrollToTop scroll error: {ex.Message}");
+            // ScrollToTop scroll error
         }
     }
 
@@ -66,7 +66,7 @@ public partial class ScrollToTop : ComponentBase, IAsyncDisposable
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ScrollToTop dispose error: {ex.Message}");
+                // ScrollToTop dispose error
             }
             finally
             {

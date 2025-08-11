@@ -99,7 +99,6 @@
         function handleInitialHashScroll() {
             if (window.location.hash && window.location.pathname === '/') {
                 const sectionId = window.location.hash.substring(1);
-                console.log('Initial hash scroll to:', sectionId);
                 setTimeout(() => scrollToSection(sectionId), 200);
             }
         }
@@ -118,18 +117,15 @@
                     behavior: 'smooth'
                 });
                 
-                console.log('Successfully scrolled to section:', sectionId);
                 retryCount = 0; // Reset retry count on success
             } else {
                 retryCount++;
-                console.log('Section not found, retry', retryCount, '/', maxRetries, '- looking for:', sectionId);
                 
                 // Element not found yet, try again with exponential backoff
                 if (retryCount < maxRetries) {
                     const delay = Math.min(200 * retryCount, 2000); // Cap at 2 seconds
                     setTimeout(() => scrollToSection(sectionId), delay);
                 } else {
-                    console.warn('Failed to find section after', maxRetries, 'retries:', sectionId);
                     retryCount = 0; // Reset for next attempt
                 }
             }
@@ -138,7 +134,6 @@
         // Enhanced hash change handler
         window.addEventListener('hashchange', function(event) {
             const sectionId = window.location.hash.substring(1);
-            console.log('Hash changed to:', sectionId, 'on path:', window.location.pathname);
             
             if (sectionId) {
                 if (window.location.pathname === '/') {
@@ -146,7 +141,6 @@
                     scrollToSection(sectionId);
                 } else {
                     // Not on home page, navigation will occur
-                    console.log('Hash navigation will trigger page change');
                     isNavigatingToHash = true;
                 }
             }
@@ -154,20 +148,17 @@
         
         // Listen for Blazor navigation events
         window.addEventListener('popstate', function(event) {
-            console.log('Popstate event - checking for hash navigation');
             setTimeout(handleInitialHashScroll, 100);
         });
         
         // Blazor-specific: Handle after Blazor renders
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, checking for initial hash');
             handleInitialHashScroll();
         });
         
         // Additional check after potential Blazor re-renders
         function checkPendingHashNavigation() {
             if (isNavigatingToHash && window.location.hash && window.location.pathname === '/') {
-                console.log('Handling pending hash navigation');
                 isNavigatingToHash = false;
                 const sectionId = window.location.hash.substring(1);
                 setTimeout(() => scrollToSection(sectionId), 300);
@@ -188,19 +179,14 @@
                     } else {
                         document.documentElement.classList.remove('dark');
                     }
-                    console.log('Initial theme applied:', savedTheme || 'light');
-                    console.log('DOM classList after initial apply:', document.documentElement.className);
                 } catch (e) {
-                    console.error('Could not apply initial theme:', e);
+                    // Ignore localStorage errors
                 }
             },
             
             // Called by C# ThemeService to apply theme changes
             setTheme: function(isDark) {
                 try {
-                    console.log('setTheme called with isDark:', isDark);
-                    console.log('DOM classList before:', document.documentElement.className);
-                    
                     // Force immediate theme application
                     document.documentElement.classList.remove('dark');
                     if (isDark) {
@@ -209,17 +195,12 @@
                     
                     // Also save to localStorage immediately
                     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                    
-                    console.log('DOM classList after:', document.documentElement.className);
-                    console.log('Dark class present:', document.documentElement.classList.contains('dark'));
-                    console.log('Theme set by C# completed:', isDark ? 'dark' : 'light');
                 } catch (e) {
-                    console.error('Could not set theme:', e);
                     throw e; // Re-throw so C# can catch it
                 }
             },
             
-            // Debug function to check current state
+            // Get current theme state
             getThemeState: function() {
                 return {
                     classList: document.documentElement.className,
@@ -252,10 +233,8 @@
             
             if (isDark && !hasDarkClass) {
                 document.documentElement.classList.add('dark');
-                console.log('Instantly reapplied dark theme');
             } else if (!isDark && hasDarkClass) {
                 document.documentElement.classList.remove('dark');
-                console.log('Instantly reapplied light theme');
             }
         }
         

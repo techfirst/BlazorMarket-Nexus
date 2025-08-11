@@ -14,10 +14,6 @@ public class ThemeService
         
         // If we have static state, immediately apply it to this instance
         // This ensures new service instances inherit the persisted theme
-        if (_isInitialized)
-        {
-            Console.WriteLine($"New ThemeService instance inheriting static state: {(_isDarkMode ? "dark" : "light")}");
-        }
     }
 
     public bool IsDarkMode => _isDarkMode;
@@ -33,12 +29,10 @@ public class ThemeService
             var savedTheme = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "theme");
             _isDarkMode = savedTheme == "dark";
             await ApplyThemeAsync();
-            Console.WriteLine($"ThemeService initialized with theme: {(_isDarkMode ? "dark" : "light")}");
             _isInitialized = true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"ThemeService initialization error: {ex.Message}");
             _isDarkMode = false;
             _isInitialized = true;
         }
@@ -53,7 +47,6 @@ public class ThemeService
             
             // We have static state, just apply it
             await ApplyThemeAsync();
-            Console.WriteLine($"Theme reapplied from static state: {(_isDarkMode ? "dark" : "light")}");
         }
         else
         {
@@ -67,17 +60,13 @@ public class ThemeService
         try
         {
             _isDarkMode = !_isDarkMode;
-            Console.WriteLine($"Theme toggled to: {(_isDarkMode ? "dark" : "light")}");
             
             await ApplyThemeAsync();
             await SaveThemePreferenceAsync();
             OnThemeChanged?.Invoke();
-            
-            Console.WriteLine("Theme toggle completed successfully");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error toggling theme: {ex.Message}");
             // Revert the change if something went wrong
             _isDarkMode = !_isDarkMode;
         }
@@ -89,15 +78,13 @@ public class ThemeService
         {
             // Try coordinated approach first
             await _jsRuntime.InvokeVoidAsync("window.themeHelper.setTheme", _isDarkMode);
-            Console.WriteLine($"Theme applied: {(_isDarkMode ? "dark" : "light")}");
         }
         catch (JSDisconnectedException)
         {
-            Console.WriteLine("JavaScript disconnected during theme application - theme will be applied on next render");
+            // JavaScript disconnected - theme will be applied on next render
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Theme application failed: {ex.Message}");
             // Fallback to direct DOM manipulation
             try
             {
@@ -109,15 +96,14 @@ public class ThemeService
                 {
                     await _jsRuntime.InvokeVoidAsync("eval", "document.documentElement.classList.remove('dark')");
                 }
-                Console.WriteLine($"Theme applied via fallback: {(_isDarkMode ? "dark" : "light")}");
             }
             catch (JSDisconnectedException)
             {
-                Console.WriteLine("JavaScript disconnected during fallback theme application");
+                // JavaScript disconnected during fallback
             }
             catch (Exception fallbackEx)
             {
-                Console.WriteLine($"Fallback theme application failed: {fallbackEx.Message}");
+                // Fallback failed
             }
         }
     }
@@ -128,11 +114,10 @@ public class ThemeService
         {
             var themeValue = _isDarkMode ? "dark" : "light";
             await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "theme", themeValue);
-            Console.WriteLine($"Theme saved to localStorage: {themeValue}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error saving theme preference: {ex.Message}");
+            // Error saving theme preference
         }
     }
 }
