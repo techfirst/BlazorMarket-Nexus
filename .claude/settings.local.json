@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(cp:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(dotnet build:*)"
     ],
     "deny": []
   }

@@ -1,0 +1,16 @@
+{
+  "name": "nexus-blazor",
+  "version": "1.0.0",
+  "description": "Tailwind CSS build for Nexus Blazor application",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/Nexus/wwwroot/css/input.css -o ./src/Nexus/wwwroot/css/app.css --minify",
+    "watch-css": "tailwindcss -i ./src/Nexus/wwwroot/css/input.css -o ./src/Nexus/wwwroot/css/app.css --watch",
+    "dev": "npm run watch-css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  },
+  "private": true
+}

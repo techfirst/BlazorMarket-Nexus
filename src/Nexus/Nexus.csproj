@@ -6,4 +6,68 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Check if Node.js and npm are available -->
+  <Target Name="CheckNodeJs">
+    <PropertyGroup>
+      <NodePath Condition="'$(OS)' != 'Windows_NT'">node</NodePath>
+      <NodePath Condition="'$(OS)' == 'Windows_NT'">node.exe</NodePath>
+      <NpmPath Condition="'$(OS)' != 'Windows_NT'">npm</NpmPath>
+      <NpmPath Condition="'$(OS)' == 'Windows_NT'">npm.cmd</NpmPath>
+    </PropertyGroup>
+    
+    <Exec Command="$(NodePath) --version" ContinueOnError="true" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="NodeExitCode" />
+    </Exec>
+    
+    <PropertyGroup>
+      <NodeJsAvailable Condition="'$(NodeExitCode)' == '0'">true</NodeJsAvailable>
+      <NodeJsAvailable Condition="'$(NodeExitCode)' != '0'">false</NodeJsAvailable>
+    </PropertyGroup>
+    
+    <Warning Condition="'$(NodeJsAvailable)' != 'true'" Text="Node.js not found. Tailwind CSS will not be built automatically. Please install Node.js and run 'npm install' then 'npm run build-css' manually." />
+  </Target>
+
+  <!-- Install npm dependencies if needed -->
+  <Target Name="NpmInstall" BeforeTargets="BuildTailwindCSS;PublishTailwindCSS" DependsOnTargets="CheckNodeJs" Condition="'$(NodeJsAvailable)' == 'true'">
+    <PropertyGroup>
+      <NpmPackageJsonDir>$(MSBuildProjectDirectory)/../../</NpmPackageJsonDir>
+    </PropertyGroup>
+    
+    <!-- Only run npm install if node_modules doesn't exist or is older than package.json -->
+    <ItemGroup>
+      <PackageJsonFile Include="$(NpmPackageJsonDir)package.json" />
+      <NodeModulesDir Include="$(NpmPackageJsonDir)node_modules" />
+    </ItemGroup>
+    
+    <PropertyGroup>
+      <ShouldRunNpmInstall Condition="!Exists('$(NpmPackageJsonDir)node_modules')">true</ShouldRunNpmInstall>
+      <ShouldRunNpmInstall Condition="'$(ShouldRunNpmInstall)' != 'true' AND '@(PackageJsonFile)' > '@(NodeModulesDir)'">true</ShouldRunNpmInstall>
+    </PropertyGroup>
+    
+    <Message Condition="'$(ShouldRunNpmInstall)' == 'true'" Text="Running npm install..." Importance="high" />
+    <Exec Condition="'$(ShouldRunNpmInstall)' == 'true'" Command="$(NpmPath) install" WorkingDirectory="$(NpmPackageJsonDir)" />
+  </Target>
+
+  <!-- Build CSS with Tailwind before .NET build -->
+  <Target Name="BuildTailwindCSS" BeforeTargets="Build" DependsOnTargets="CheckNodeJs;NpmInstall" Condition="'$(NodeJsAvailable)' == 'true'">
+    <PropertyGroup>
+      <TailwindWorkingDir>$(MSBuildProjectDirectory)/../../</TailwindWorkingDir>
+    </PropertyGroup>
+    
+    <Message Text="Building Tailwind CSS..." Importance="high" />
+    <Exec Command="$(NpmPath) run build-css" WorkingDirectory="$(TailwindWorkingDir)" ContinueOnError="false" />
+    <Message Text="Tailwind CSS build completed." Importance="high" />
+  </Target>
+
+  <!-- Build CSS with Tailwind before publish -->
+  <Target Name="PublishTailwindCSS" BeforeTargets="BeforePublish" DependsOnTargets="CheckNodeJs;NpmInstall" Condition="'$(NodeJsAvailable)' == 'true'">
+    <PropertyGroup>
+      <TailwindWorkingDir>$(MSBuildProjectDirectory)/../../</TailwindWorkingDir>
+    </PropertyGroup>
+    
+    <Message Text="Building Tailwind CSS for publish..." Importance="high" />
+    <Exec Command="$(NpmPath) run build-css" WorkingDirectory="$(TailwindWorkingDir)" ContinueOnError="false" />
+    <Message Text="Tailwind CSS build for publish completed." Importance="high" />
+  </Target>
+
 </Project>

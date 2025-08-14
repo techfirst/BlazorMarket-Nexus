@@ -291,6 +291,10 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Tailwind CSS generated files
+src/Nexus/wwwroot/css/app.css
+package-lock.json
+
 # Visual Studio 6 build log
 *.plg
 
