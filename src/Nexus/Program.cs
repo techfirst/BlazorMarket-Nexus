@@ -3,7 +3,7 @@ using Nexus.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. Just a small test comment.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
